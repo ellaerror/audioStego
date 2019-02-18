@@ -8,7 +8,7 @@ from math import cos, sin, radians
 def encode(argDict):
 	# Define variables
 	code = argDict.get('code')
-	offset = argDict.get('offset')
+	offset = int(argDict.get('offset'))
 	infile = argDict.get('infile')
 	outfile = argDict.get('outfile')
 	text = argDict.get('text')
@@ -23,7 +23,7 @@ def encode(argDict):
 	
 	# Change the message to be encoded into hex
 	hexText = [ ("0" + hex(ord(x)).replace('0x', ''))[-2:] for x in text]
-	print "Message Hex: ", hexText						#DEBUG
+	#print "Message Hex: ", hexText						#DEBUG
 	
 	# Get Hex values of the file'
 	with open(infile, 'rb') as file:   
@@ -41,7 +41,7 @@ def encode(argDict):
 		else:
 			spaces.append(a3(code, count))
 		count += 1
-	print "Spaces between: ", spaces					#DEBUG
+	#print "Spaces between: ", spaces					#DEBUG
 	
 	# Parse through and change the values
 	count = offset
@@ -51,7 +51,7 @@ def encode(argDict):
 	for value in hexValues:
 		
 		if (count == changeValue):
-			print count, messageIndex, value, spaces[messageIndex] 	#DEBUG
+			#print count, messageIndex, value, spaces[messageIndex] 	#DEBUG
 			hexValues[count] = hexText[messageIndex]
 			#print hexText[messageIndex-1] 					#DEBUG
 			changeValue += spaces[messageIndex]
@@ -77,7 +77,7 @@ def encode(argDict):
 def decode(argDict):
 	# Define variables
 	code = argDict.get('code')
-	offset = argDict.get('offset')
+	offset = int(argDict.get('offset'))
 	infile = argDict.get('infile')
 	ba1 = argDict.get('a1')
 	ba2 = argDict.get('a2')
@@ -102,7 +102,7 @@ def decode(argDict):
 		else:
 			spaces.append(a3(code, count))
 		count += 1
-	print "SPACES:", spaces[:10]
+	#print "SPACES:", spaces[:10]
 		
 	# Go through the file and check every space the algorithm covers with the params
 	count = offset
@@ -111,7 +111,7 @@ def decode(argDict):
 	
 	for value in hexValues:
 		if (count == changeValue):
-			print count, messageIndex, value, spaces[messageIndex]
+			#print count, messageIndex, value, spaces[messageIndex]
 			secretmessage += hexValues[count].decode("hex")
 			changeValue += spaces[messageIndex]
 			messageIndex += 1
