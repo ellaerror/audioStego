@@ -1,6 +1,8 @@
 # Imports
 import argparse
 import os
+import random
+import string
 from math import cos, sin, radians
 
 # Function definitions
@@ -42,6 +44,10 @@ def encode(argDict):
 			spaces.append(a3(code, count))
 		count += 1
 	#print "Spaces between: ", spaces					#DEBUG
+	
+	# Randomly change values to throw people off the message
+	for x in range(random.randint(150,400)):
+		hexValues[random.randint(0,len(hexValues))] = ("0" + hex(ord(random.choice(string.ascii_letters))).replace('0x', ''))[-2:]
 	
 	# Parse through and change the values
 	count = offset
